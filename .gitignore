@@ -1,0 +1,4 @@
+# Ignore audio files
+*.aif
+*.mp3
+*.wav
