@@ -1,5 +1,9 @@
+interface IDrawable {
+  
+  void draw(); 
+}
 
-public class Circle
+public class Circle implements IDrawable
 {
   PVector pos;
   float size;
@@ -70,6 +74,7 @@ public class Circle
   public void draw()
   {
     noFill();
+    PVector basePos = new PVector(0,0);
     translate(width/2, height/2);
 
     if (this.colorScheme == 1) {
@@ -80,7 +85,7 @@ public class Circle
     }
 
     strokeWeight(strokeWeightInner);
-    ellipse(0, 0, this.size, this.size);
+    ellipse(basePos.x, basePos.y, this.size, this.size);
 
     if (this.colorScheme == 1)
     {
@@ -91,7 +96,7 @@ public class Circle
     }
 
     strokeWeight(strokeWeightOuter);
-    ellipse(0, 0, this.size*1.2, this.size+50);
+    ellipse(basePos.x, basePos.y, this.size*1.2, this.size+50);
     translate(-width/2, -height/2);
   }
 }

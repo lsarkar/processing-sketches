@@ -1,8 +1,7 @@
 class RotatingPoints
 /*
-Creates a sphere of rotating ellipses
+Creates a circle of rotating ellipses
  */
-
 
 {
   int numPoints;
@@ -76,7 +75,7 @@ Creates a sphere of rotating ellipses
 
       if (i==0)
       {
-        stroke(new Shades().get(3));
+        stroke(new Shades().getThird());
       } else if (i == int(this.numPoints/2))
       {
         stroke(new Shades().getFourth());

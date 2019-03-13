@@ -10,14 +10,14 @@ class OctaveCalculator
   float highFreq;
   float freqWidth;
   int index;
-  
+
   FFT fftLog;
 
   public OctaveCalculator(FFT fftLog, int idx)
   {
+    // idx - index of the band (set of 3). Refer to BAND LOOKUP TABLE for frequency info
     this.fftLog = fftLog;
     this.index = idx;
-
     this.initialize();
   }
 

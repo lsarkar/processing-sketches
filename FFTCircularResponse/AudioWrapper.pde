@@ -105,6 +105,5 @@ public class AudioLibWrapper
       println("Index", i, "Center Freq", centerFrequency, "Low:", lowFreq, "High:", highFreq, "Width:", freqWidth);
     }
     
-    
   }
 }

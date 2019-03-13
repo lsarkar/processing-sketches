@@ -1,3 +1,6 @@
+
+
+
 class RandomPoints {
 
   RandomPoints()

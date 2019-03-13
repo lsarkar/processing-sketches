@@ -1,5 +1,9 @@
 class SingleBand
 {
+  /*
+   Helper class to get band frequency information
+   */
+
   float averageWidth;
   float centerFrequency;
   float lowFreq;
@@ -11,7 +15,7 @@ class SingleBand
   {
     this.fftLog = fftLog;
     this.averageWidth = this.fftLog.getAverageBandWidth(band);
-    this.centerFrequency    = this.fftLog.getAverageCenterFrequency(band);
+    this.centerFrequency = this.fftLog.getAverageCenterFrequency(band);
     this.lowFreq  = centerFrequency - averageWidth/2;
     this.highFreq = centerFrequency + averageWidth/2;
     this.freqWidth = highFreq - lowFreq;
@@ -36,4 +40,5 @@ class SingleBand
   {
     return this.freqWidth;
   }
+  
 }

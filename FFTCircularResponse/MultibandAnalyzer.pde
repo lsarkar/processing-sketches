@@ -1,38 +1,55 @@
 /*
-11.2  12.5  14.1
- 14.1  16  17.8
- 17.8  20  22.4
- 22.4  25  28.2
- 28.2  31.5  35.5
- 35.5  40  44.7
- 44.7  50  56.2
- 56.2  63  70.8
- 70.8  80  89.1
- 89.1  100  112
- 112  125  141
- 141  160  178
- 178  200  224
- 224  250  282
- 282  315  355
- 355  400  447
- 447  500  562
- 562  630  708
- 708  800  891
- 891  1000  1122
- 1122  1250  1413
- 1413  1600  1778
- 1778  2000  2239
- 2239  2500  2818
- 2818  3150  3548
- 3548  4000  4467
- 4467  5000  5623
- 5623  6300  7079
- 7079  8000  8913
- 8913  10000  11220
- 11220  12500  14130
- 14130  16000  17780
- 17780  20000  22390
-
+BAND LOOKUP TABLE
+ 
+ 0
+ Index 0 Center Freq 7.1777344 Low: 0.0 High: 14.355469 Width: 14.355469
+ Index 1 Center Freq 21.533203 Low: 14.355469 High: 28.710938 Width: 14.355469
+ Index 2 Center Freq 35.88867 Low: 28.710938 High: 43.066406 Width: 14.355469
+ 
+ 1
+ Index 3 Center Freq 50.24414 Low: 43.066406 High: 57.421875 Width: 14.355469
+ Index 4 Center Freq 64.59961 Low: 57.421875 High: 71.77734 Width: 14.355469
+ Index 5 Center Freq 78.95508 Low: 71.77734 High: 86.13281 Width: 14.355469
+ 
+ 2
+ Index 6 Center Freq 100.48828 Low: 86.13281 High: 114.84375 Width: 28.710938
+ Index 7 Center Freq 129.19922 Low: 114.84375 High: 143.55469 Width: 28.710938
+ Index 8 Center Freq 157.91016 Low: 143.55469 High: 172.26562 Width: 28.710938
+ 
+ 3
+ Index 9 Center Freq 200.97656 Low: 172.26562 High: 229.6875 Width: 57.421875
+ Index 10 Center Freq 258.39844 Low: 229.6875 High: 287.10938 Width: 57.421875
+ Index 11 Center Freq 315.8203 Low: 287.10938 High: 344.53125 Width: 57.421875
+ 
+ 4
+ Index 12 Center Freq 401.95312 Low: 344.53125 High: 459.375 Width: 114.84375
+ Index 13 Center Freq 516.7969 Low: 459.375 High: 574.21875 Width: 114.84375
+ Index 14 Center Freq 631.6406 Low: 574.21875 High: 689.0625 Width: 114.84375
+ 
+ 5
+ Index 15 Center Freq 803.90625 Low: 689.0625 High: 918.75 Width: 229.6875
+ Index 16 Center Freq 1033.5938 Low: 918.75 High: 1148.4375 Width: 229.6875
+ Index 17 Center Freq 1263.2812 Low: 1148.4375 High: 1378.125 Width: 229.6875
+ 
+ 6
+ Index 18 Center Freq 1607.8125 Low: 1378.125 High: 1837.5 Width: 459.375
+ Index 19 Center Freq 2067.1875 Low: 1837.5 High: 2296.875 Width: 459.375
+ Index 20 Center Freq 2526.5625 Low: 2296.875 High: 2756.25 Width: 459.375
+ 
+ 7
+ Index 21 Center Freq 3215.625 Low: 2756.25 High: 3675.0 Width: 918.75
+ Index 22 Center Freq 4134.375 Low: 3675.0 High: 4593.75 Width: 918.75
+ Index 23 Center Freq 5053.125 Low: 4593.75 High: 5512.5 Width: 918.75
+ 
+ 8
+ Index 24 Center Freq 6431.25 Low: 5512.5 High: 7350.0 Width: 1837.5
+ Index 25 Center Freq 8268.75 Low: 7350.0 High: 9187.5 Width: 1837.5
+ Index 26 Center Freq 10106.25 Low: 9187.5 High: 11025.0 Width: 1837.5
+ 
+ 9
+ Index 27 Center Freq 12862.5 Low: 11025.0 High: 14700.0 Width: 3675.0
+ Index 28 Center Freq 16537.5 Low: 14700.0 High: 18375.0 Width: 3675.0
+ Index 29 Center Freq 20212.5 Low: 18375.0 High: 22050.0 Width: 3675.0
  */
 
 
@@ -40,40 +57,41 @@
 
 class MultibandAnalyzer
 {
-   FFT fftLog;
-   int NUMBER_OF_BANDS = 10; 
-   int NUM_BANDS_IN_OCTAVE = 3;
-   
-   public MultibandAnalyzer(FFT fftLog)
-   {
-      this.fftLog = fftLog;
-      // expecting fftLog of 30 averages
-      this.fftLog.logAverages(22, NUM_BANDS_IN_OCTAVE);
-   }
-   
-   public void setFFTLog(FFT fftLog)
-   {
-     this.fftLog = fftLog; 
-   }
-   
-   public void getAllBandInfo(int i)
-   {      
-      OctaveCalculator bCalc = new OctaveCalculator(this.fftLog, i);
-   }
-   
-   // get band 0 - 10 (0 is <20Hz, not considered useful for analysis of audio tracks)
-   public float getBandAvg(int i)
-   { 
-     OctaveCalculator bCalc = new OctaveCalculator(this.fftLog, i);
-     
-     final int firstBand = bCalc.getFirstBandNum();
-     final int secondBand = 1 + bCalc.getSecondBandNum();
-     final int thirdBand = 2 + bCalc.getThirdBandNum();
-     
-     println("first band", firstBand);
-     println("second band", secondBand);
-     println("third band", thirdBand);
-      
-     return (this.fftLog.getAvg(firstBand) + this.fftLog.getAvg(secondBand) + this.fftLog.getAvg(thirdBand)) / bCalc.getTotalBands();
-   }
+  FFT fftLog;
+  int NUMBER_OF_BANDS = 10; 
+  int NUM_BANDS_IN_OCTAVE = 3;
+
+  public MultibandAnalyzer(FFT fftLog)
+  {
+    this.fftLog = fftLog;
+    // expecting fftLog of 30 averages
+    this.fftLog.logAverages(22, NUM_BANDS_IN_OCTAVE);
+  }
+
+  public void setFFTLog(FFT fftLog)
+  {
+    this.fftLog = fftLog;
+  }
+
+  public void getAllBandInfo(int i)
+  {      
+    OctaveCalculator bCalc = new OctaveCalculator(this.fftLog, i);
+    bCalc.toString();
+  }
+
+  // get band 0 - 10 (0 is <45Hz, not considered useful for analysis of audio tracks)
+  public float getBandAvg(int i)
+  { 
+    OctaveCalculator bCalc = new OctaveCalculator(this.fftLog, i);
+
+    final int firstBand = bCalc.getFirstBandNum();
+    final int secondBand = 1 + bCalc.getSecondBandNum();
+    final int thirdBand = 2 + bCalc.getThirdBandNum();
+
+    //println("first band", firstBand);
+    //println("second band", secondBand);
+    //println("third band", thirdBand);
+
+    return (this.fftLog.getAvg(firstBand) + this.fftLog.getAvg(secondBand) + this.fftLog.getAvg(thirdBand)) / bCalc.getTotalBands();
+  }
 }
