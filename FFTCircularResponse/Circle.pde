@@ -3,6 +3,10 @@ interface IDrawable {
   void draw(); 
 }
 
+interface IExpandable {
+  void expand(float expandVal); 
+}
+
 public class Circle implements IDrawable
 {
   PVector pos;

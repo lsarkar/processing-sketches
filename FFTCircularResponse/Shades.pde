@@ -5,7 +5,9 @@ public class Shades
   int p2;
   int p3;
   int p4;
-  int p5;    
+  int p5;
+  
+  int NUM_COLORS = 5;
   
   public Shades()
   {
@@ -43,4 +45,10 @@ public class Shades
   {
      return this.p5; 
   }
+  
+  public int getPaletteSize()
+  {
+    return NUM_COLORS;
+  }
+  
 }

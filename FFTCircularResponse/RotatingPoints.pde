@@ -1,6 +1,6 @@
-class RotatingPoints
+class RotatingPoints implements IDrawable, IExpandable
 /*
-Creates a circle of rotating ellipses
+Creates a circle of rotating ellipses of defined radius and number of points
  */
 
 {
@@ -11,6 +11,8 @@ Creates a circle of rotating ellipses
   boolean clockwise = true;
   boolean drawLine = false;
   int direction = 1;
+  int STROKE_WEIGHT = 5;
+  float expandValue = 0;
 
   public RotatingPoints()
   {
@@ -54,11 +56,18 @@ Creates a circle of rotating ellipses
   {
     return this.drawLine;
   }
+  
+  public void expand(float expandValue)
+  {
+      this.expandValue = expandValue;
+  }
 
-  public void display()
+  public void draw()
   {
     float angle = TWO_PI/(float)this.numPoints;
-
+    int numColors = new Shades().getPaletteSize();
+    int colorDivider = this.numPoints / numColors;
+    
     if (inc == 360)
     {
       inc = 0;
@@ -69,17 +78,38 @@ Creates a circle of rotating ellipses
       float p1x = this.radius*sin((angle*i)+inc) + width/2;
       float p1y = this.radius*cos((angle*i)+inc) + height/2;
 
-      strokeWeight(5);
-      stroke(new Shades().getThird());
-      point(p1x, p1y, 0);
-
+      strokeWeight(STROKE_WEIGHT);
+      
       if (i==0)
       {
         stroke(new Shades().getThird());
-      } else if (i == int(this.numPoints/2))
-      {
-        stroke(new Shades().getFourth());
       }
+      else if (i == colorDivider*2)
+      {
+        stroke(new Shades().getSecondary()); 
+      }
+      else if (i == colorDivider*3)
+      {
+         stroke(new Shades().getThird()); 
+      }
+      else if (i == colorDivider*4)
+      {
+         stroke(new Shades().getFourth()); 
+      }
+      else if (i == colorDivider*5)
+      {
+         stroke(new Shades().getFifth()); 
+      }
+      //else if (i == int(this.numPoints/2))
+      //{
+      //  stroke(new Shades().getPrimary());
+      //}
+      //else if (i == int(colorDivider*3))
+      //{
+      //  stroke(new Shades().getFifth()); 
+      //}
+      
+      point(p1x, p1y, random(0,50 + this.expandValue));
 
       if (this.getDrawLine())
       {
