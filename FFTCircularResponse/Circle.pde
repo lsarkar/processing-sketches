@@ -7,7 +7,15 @@ interface IExpandable {
   void expand(float expandVal); 
 }
 
-public class Circle implements IDrawable
+public abstract class Shape
+{
+   Shape()
+   {
+     
+   }
+}
+
+public class Circle extends Shape implements IDrawable
 {
   PVector pos;
   float size;
@@ -30,6 +38,7 @@ public class Circle implements IDrawable
 
   public Circle(float size)
   {
+    super();
     this.size = size;
     pos = new PVector(width/2, height/2);
 

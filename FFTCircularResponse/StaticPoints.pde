@@ -1,15 +1,20 @@
-class StaticPoints {
 
+class StaticPoints implements IDrawable {
+/*
+ Draw static points
+*/
   int numPoints;
   int offset = 40;
   int strokeWeight = 3;
+  int radius;
 
-  StaticPoints(int numPoints)
+  StaticPoints(int numPoints, int radius)
   {
     this.numPoints = numPoints;
+    this.radius = radius;
   }
 
-  public void drawPoints(int radius)
+  void draw()
   {
 
     float angle=TWO_PI/(float) this.numPoints;

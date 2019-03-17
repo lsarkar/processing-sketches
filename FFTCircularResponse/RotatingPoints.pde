@@ -1,4 +1,4 @@
-class RotatingPoints implements IDrawable, IExpandable
+class RotatingPoints extends Shape implements IDrawable, IExpandable
 /*
 Creates a circle of rotating ellipses of defined radius and number of points
  */
@@ -16,12 +16,14 @@ Creates a circle of rotating ellipses of defined radius and number of points
 
   public RotatingPoints()
   {
+    super();
     this.numPoints = 20;
     this.radius = 350;
   }
 
   public RotatingPoints(float radius, int numPoints)
   {
+    super();
     this.radius = radius;
     this.numPoints = numPoints;
   }
@@ -56,18 +58,19 @@ Creates a circle of rotating ellipses of defined radius and number of points
   {
     return this.drawLine;
   }
-  
+
   public void expand(float expandValue)
   {
-      this.expandValue = expandValue;
+    this.expandValue = expandValue;
   }
 
   public void draw()
   {
     float angle = TWO_PI/(float)this.numPoints;
     int numColors = new Shades().getPaletteSize();
-    int colorDivider = this.numPoints / numColors;
-    
+    float colorDivider = this.numPoints / numColors;
+    println(colorDivider);
+    println("col divider");
     if (inc == 360)
     {
       inc = 0;
@@ -78,46 +81,26 @@ Creates a circle of rotating ellipses of defined radius and number of points
       float p1x = this.radius*sin((angle*i)+inc) + width/2;
       float p1y = this.radius*cos((angle*i)+inc) + height/2;
 
-      strokeWeight(STROKE_WEIGHT);
-      
-      if (i==0)
-      {
-        stroke(new Shades().getThird());
-      }
-      else if (i == colorDivider*2)
-      {
-        stroke(new Shades().getSecondary()); 
-      }
-      else if (i == colorDivider*3)
-      {
-         stroke(new Shades().getThird()); 
-      }
-      else if (i == colorDivider*4)
-      {
-         stroke(new Shades().getFourth()); 
-      }
-      else if (i == colorDivider*5)
-      {
-         stroke(new Shades().getFifth()); 
-      }
-      //else if (i == int(this.numPoints/2))
-      //{
-      //  stroke(new Shades().getPrimary());
-      //}
-      //else if (i == int(colorDivider*3))
-      //{
-      //  stroke(new Shades().getFifth()); 
-      //}
-      
-      point(p1x, p1y, random(0,50 + this.expandValue));
+      // divide the coloring into sectors. Number of sectors = number of colors in the shades palette
+      int colSelect = int(i / colorDivider);
 
-      if (this.getDrawLine())
-      {
-        smooth();
-        line(width/2, height/2, p1x, p1y);
-      }
+      strokeWeight(STROKE_WEIGHT);
+      stroke(new Shades().get(colSelect+1));
+      point(p1x, p1y, random(-this.expandValue, 50 + this.expandValue));
+
+      drawLineBetweenPoints(p1x, p1y);
     }
 
     inc+=(this.speedOfRotation*this.direction);
+  }
+
+  void drawLineBetweenPoints(float p1x, float p1y)
+  {
+    if (this.getDrawLine())
+    {
+      smooth();
+      strokeWeight(2);
+      line(width/2, height/2, -this.expandValue, p1x, p1y, 20+this.expandValue);
+    }
   }
 }

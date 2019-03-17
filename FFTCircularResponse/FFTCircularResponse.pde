@@ -1,6 +1,9 @@
 
 // Developed in Processing 3.4
 
+// Library dependencies:
+// Minim (2.2.2)
+
 AudioLibWrapper audioLibWrapper;
 
 MultibandAnalyzer multiBand;
@@ -36,10 +39,13 @@ void setup()
   d.setFadePercentage(5);
 
   rotatingPoints1 = new RotatingPoints(350, 3);
-  rotatingPoints2 = new RotatingPoints(50.0, 4);
+  rotatingPoints2 = new RotatingPoints(60.0, 45);
   rotatingPoints3 = new RotatingPoints(displayHeight/2.4, 250);
   rotatingPoints2.setClockwise(false);
   rotatingPoints3.setClockwise(false);
+  
+  rotatingPoints2.setDrawLine(true);
+  
 
 
   colorShade = new Shades();
@@ -72,6 +78,7 @@ void draw()
   rotatingPoints1.draw();
   rotatingPoints2.draw();
   rotatingPoints3.draw();
+  rotatingPoints2.expand(multiBand.getBandAvg(1));
   rotatingPoints3.expand(multiBand.getBandAvg(3));
 
   e.update(300 + multiBand.getBandAvg(7)*16);
