@@ -1,13 +1,13 @@
 interface IDrawable {
-  
-  void draw(); 
+
+  void draw();
 }
 
 interface IExpandable {
-  void expand(float expandVal); 
+  void expand(float expandVal);
 }
 
-public abstract class Shape
+public class Shape
 {
    Shape()
    {
@@ -15,10 +15,31 @@ public abstract class Shape
    }
 }
 
-public class Circle extends Shape implements IDrawable
+
+public class AbstractCircle
 {
-  PVector pos;
   float size;
+  PVector pos;
+
+  public AbstractCircle(float size)
+  {
+    this.size = size;
+    pos = new PVector(width/2, height/2);
+  }
+
+  public void setSize(float size)
+  {
+    this.size = size;
+  }
+
+  float getSize()
+  {
+    return this.size;
+  }
+}
+
+public class Circle extends AbstractCircle implements IDrawable
+{
   int strokeWeightInner = 11;
   int strokeWeightOuter = 3;
 
@@ -38,9 +59,7 @@ public class Circle extends Shape implements IDrawable
 
   public Circle(float size)
   {
-    super();
-    this.size = size;
-    pos = new PVector(width/2, height/2);
+    super(size);
 
     this.shades = new Shades();
 
@@ -65,11 +84,6 @@ public class Circle extends Shape implements IDrawable
     return this.acceleration.x;
   }
 
-  public void setSize(float size)
-  {
-    this.size = size;
-  }
-
   public void update(float fftCurrent)
   {
     velocity.limit(topSpeed);
@@ -87,7 +101,7 @@ public class Circle extends Shape implements IDrawable
   public void draw()
   {
     noFill();
-    PVector basePos = new PVector(0,0);
+    PVector basePos = new PVector(0, 0);
     translate(width/2, height/2);
 
     if (this.colorScheme == 1) {

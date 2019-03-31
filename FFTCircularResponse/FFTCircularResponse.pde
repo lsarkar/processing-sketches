@@ -4,6 +4,9 @@
 // Library dependencies:
 // Minim (2.2.2)
 
+// royalty free music source
+// https://www.bensound.com/royalty-free-music/electronica
+
 AudioLibWrapper audioLibWrapper;
 
 MultibandAnalyzer multiBand;
@@ -18,18 +21,25 @@ int circleOuter = 600;
 
 Circle c = new Circle(circleMiddle);
 Circle d = new Circle(circleOuter);
-Circle e = new Circle(circleInner); 
+Circle e = new Circle(circleInner);
+
+Modulator modu = new Modulator();
 
 Shades colorShade;
+
+int FRAME_RATE = 30;
 
 void setup()
 {
   // audio track must exist inside the 'data' folder, otherwise Minim cannot load the file
   // assumes test.mp3 is in 'data' folder
-  String songTitle = "Crush.mp3";
+  String songTitle = "bensound-dubstep.mp3";
 
   size(displayWidth, displayHeight, P3D);
   rectMode(CORNERS);
+  
+  // set Frame Rate
+  frameRate(FRAME_RATE);
 
   // audio configuration
   audioLibWrapper = new AudioLibWrapper(songTitle, this);
@@ -46,8 +56,6 @@ void setup()
   
   rotatingPoints2.setDrawLine(true);
   
-
-
   colorShade = new Shades();
 }
 
@@ -80,8 +88,12 @@ void draw()
   rotatingPoints3.draw();
   rotatingPoints2.expand(multiBand.getBandAvg(1));
   rotatingPoints3.expand(multiBand.getBandAvg(3));
+  
+  modu.run();
+  
+  rotatingPoints3.addRadiusModulation(modu.getSize());
 
-  e.update(300 + multiBand.getBandAvg(7)*16);
+  e.update(300 + multiBand.getBandAvg(3)*2);
   d.update(500 + multiBand.getBandAvg(5)*8);
   c.update(multiBand.getBandAvg(1)*4);
   e.setFadePercentage(80);
@@ -90,6 +102,8 @@ void draw()
 
   rotatingPoints1.setSpeedOfRotation(0.001 + (multiBand.getBandAvg(5)/120));
   rotatingPoints2.setSpeedOfRotation(0.001);
+  
+  rotatingPoints1.setDrawLine(true);
 
   // extra points
   new RandomPoints().draw(multiBand.getBandAvg(6)/50);

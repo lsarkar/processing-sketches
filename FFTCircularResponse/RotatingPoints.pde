@@ -13,6 +13,8 @@ Creates a circle of rotating ellipses of defined radius and number of points
   int direction = 1;
   int STROKE_WEIGHT = 5;
   float expandValue = 0;
+  int radiusModulationCounter = 0;
+  boolean addFlag = true;
 
   public RotatingPoints()
   {
@@ -21,19 +23,19 @@ Creates a circle of rotating ellipses of defined radius and number of points
     this.radius = 350;
   }
 
-  public RotatingPoints(float radius, int numPoints)
+  RotatingPoints(float radius, int numPoints)
   {
     super();
     this.radius = radius;
     this.numPoints = numPoints;
   }
 
-  public void setSpeedOfRotation(float speedOfRotation)
+  void setSpeedOfRotation(float speedOfRotation)
   {
     this.speedOfRotation = speedOfRotation;
   }
 
-  public void setClockwise(boolean clockwise)
+  void setClockwise(boolean clockwise)
   {
     this.clockwise = clockwise;
     if (clockwise) 
@@ -44,33 +46,37 @@ Creates a circle of rotating ellipses of defined radius and number of points
     }
   }
 
-  public boolean isClockwise()
+  void addRadiusModulation(float modulation)
+  {
+    this.radius+=modulation;
+  }
+
+  boolean isClockwise()
   {
     return this.clockwise;
   }
 
-  public void setDrawLine(boolean drawLine)
+  void setDrawLine(boolean drawLine)
   {
     this.drawLine = drawLine;
   }
 
-  public boolean getDrawLine()
+  boolean getDrawLine()
   {
     return this.drawLine;
   }
 
-  public void expand(float expandValue)
+  void expand(float expandValue)
   {
     this.expandValue = expandValue;
   }
 
-  public void draw()
+  void draw()
   {
     float angle = TWO_PI/(float)this.numPoints;
     int numColors = new Shades().getPaletteSize();
     float colorDivider = this.numPoints / numColors;
-    println(colorDivider);
-    println("col divider");
+
     if (inc == 360)
     {
       inc = 0;
