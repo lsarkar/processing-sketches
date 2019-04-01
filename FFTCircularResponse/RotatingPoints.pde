@@ -1,11 +1,42 @@
-class RotatingPoints extends Shape implements IDrawable, IExpandable
+class Expansion
+{
+  
+}
+
+enum ExpansionType
+{
+    
+}
+
+abstract class AbstractCircularPoints extends Shape
+{
+    float radius;
+  
+    AbstractCircularPoints(float radius)
+    {
+       super();
+       this.radius = radius;
+    }
+    
+    void setRadius(float radius)
+    {
+      this.radius = radius;
+    }
+    
+    float getRadius()
+    {
+      return this.radius;
+    }
+  
+}
+
+class RotatingPoints extends AbstractCircularPoints implements IDrawable, IExpandable
 /*
 Creates a circle of rotating ellipses of defined radius and number of points
  */
 
 {
   int numPoints;
-  float radius;
   float inc = 0;
   float speedOfRotation = 0.0010;
   boolean clockwise = true;
@@ -15,17 +46,17 @@ Creates a circle of rotating ellipses of defined radius and number of points
   float expandValue = 0;
   int radiusModulationCounter = 0;
   boolean addFlag = true;
+  int expandOffset = 50;
 
   public RotatingPoints()
   {
-    super();
+    super(350);
     this.numPoints = 20;
-    this.radius = 350;
   }
 
   RotatingPoints(float radius, int numPoints)
   {
-    super();
+    super(350);
     this.radius = radius;
     this.numPoints = numPoints;
   }
@@ -70,6 +101,11 @@ Creates a circle of rotating ellipses of defined radius and number of points
   {
     this.expandValue = expandValue;
   }
+  
+  void setExpandOffset(int offset)
+  {
+     this.expandOffset = offset; 
+  }
 
   void draw()
   {
@@ -92,9 +128,9 @@ Creates a circle of rotating ellipses of defined radius and number of points
 
       strokeWeight(STROKE_WEIGHT);
       stroke(new Shades().get(colSelect+1));
-      point(p1x, p1y, random(-this.expandValue, 50 + this.expandValue));
-
+      point(p1x, p1y, random(-this.expandValue, this.expandOffset + this.expandValue));
       drawLineBetweenPoints(p1x, p1y);
+      
     }
 
     inc+=(this.speedOfRotation*this.direction);
