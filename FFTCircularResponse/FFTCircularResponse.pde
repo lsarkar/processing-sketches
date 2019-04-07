@@ -13,19 +13,20 @@ MultibandAnalyzer multiBand;
 
 RotatingPoints rotatingPoints1;
 RotatingPoints rotatingPoints2;
-RotatingPoints rotatingPoints3;
+RotatingPoints outerRing;
 RotatingPoints rotatingPoints4;
+RotatingPoints rotatingPoints4Duplicate;
+RotatingPoints rotatingPoints4Inner;
 
-int circleInner = 100;
-int circleMiddle = 200;
-int circleOuter = 600;
+int circleMiddle = 160;
+int alphaInnerCircles = 130;
+int alphaRotatingBlade = 200;
+int alphaRot2 = 200;
 
 Modulator modu = new Modulator();
 
 UpdateRate updateRate = new UpdateRate();
-
 Shades colorShade;
-
 RandomPoints randPoints = new RandomPoints();
 
 int FRAME_RATE = 30;
@@ -34,10 +35,11 @@ void setup()
 {
   // audio track must exist inside the 'data' folder, otherwise Minim cannot load the file
   // assumes test.mp3 is in 'data' folder
-  String songTitle = "bensound-dubstep.mp3";
+  String songTitle = "bensound-moose.mp3";
 
   size(displayWidth, displayHeight, P3D);
   rectMode(CORNERS);
+  noCursor();
 
   // set Frame Rate
   frameRate(FRAME_RATE);
@@ -47,18 +49,29 @@ void setup()
   multiBand = audioLibWrapper.getAnalyzer();
 
   /* CUSTOM CLASS SETUP */
-
   rotatingPoints1 = new RotatingPoints(350, 3);
   rotatingPoints2 = new RotatingPoints(60.0, 45);
-  //rotatingPoints3 = new RotatingPoints(displayHeight/2.4, 250);
-  rotatingPoints3 = new RotatingPoints(displayHeight/2.5, 400);
+  outerRing = new RotatingPoints(displayHeight/2.6, 400);
   rotatingPoints2.setClockwise(false);
-  rotatingPoints3.setClockwise(false);
+  outerRing.setClockwise(false);
   rotatingPoints2.setDrawLine(true);
-  
-  rotatingPoints4 = new RotatingPoints(circleMiddle, 300);
+  rotatingPoints1.setExpandOffset(1);
+  rotatingPoints4 = new RotatingPoints(circleMiddle, 200);
   rotatingPoints4.setSpeedOfRotation(0.0);
-  rotatingPoints4.setExpandOffset(0);
+  rotatingPoints4.setExpandOffset(5);
+  rotatingPoints4Duplicate = new RotatingPoints(circleMiddle, 180);
+  rotatingPoints4Duplicate.setExpandOffset(8);
+  rotatingPoints4Inner = new RotatingPoints(circleMiddle, 150);
+  rotatingPoints4Inner.setExpandOffset(7);
+  rotatingPoints4Inner.setClockwise(false);
+
+  rotatingPoints4Duplicate.setAlpha(alphaInnerCircles);
+  rotatingPoints4Inner.setAlpha(alphaInnerCircles);
+  rotatingPoints4.setAlpha(alphaInnerCircles);
+  rotatingPoints1.setAlpha(alphaRotatingBlade);
+  rotatingPoints2.setAlpha(alphaRot2);
+
+  rotatingPoints1.setStrokeWeight(15);
 
   colorShade = new Shades();
 }
@@ -81,31 +94,43 @@ void draw()
   audioLibWrapper.forward();
 
   drawCenterBox();
-  
+
   // draw all
   rotatingPoints1.draw();
   rotatingPoints2.draw();
-  rotatingPoints3.draw();
-  
-  if (updateRate.isUpdateable(17))
+  outerRing.draw();
+
+  if (updateRate.isUpdateable(2))
   {
     rotatingPoints4.draw();
+    rotatingPoints4Duplicate.draw();
+    rotatingPoints4Inner.draw();
   }
-  
+
+  // modulator update
+  modu.run();
+
   // update all
   rotatingPoints2.expand(multiBand.getBandAvg(1)*1.2);
-  rotatingPoints3.expand(multiBand.getBandAvg(3));
-  
+  outerRing.expand(multiBand.getBandAvg(3));
   rotatingPoints4.expand(multiBand.getBandAvg(5));
   rotatingPoints4.setRadius(circleMiddle + multiBand.getBandAvg(5)*8);
-  
-  modu.run();
-  
+
+  rotatingPoints4Duplicate.expand(multiBand.getBandAvg(6));
+  rotatingPoints4Duplicate.setRadius(circleMiddle + 5 + multiBand.getBandAvg(6)*8);
+
+  rotatingPoints4Inner.expand(multiBand.getBandAvg(7));
+  rotatingPoints4Inner.setRadius(circleMiddle + multiBand.getBandAvg(7)*8);
+
   rotatingPoints4.addRadiusModulation(modu.getSize());
-  rotatingPoints3.addRadiusModulation(modu.getSize());
-  
+  rotatingPoints4Duplicate.addRadiusModulation(modu.getSize());
+  rotatingPoints4Inner.addRadiusModulation(modu.getSize());
+  outerRing.addRadiusModulation(modu.getSize());
+
   rotatingPoints1.setSpeedOfRotation(0.001 + (multiBand.getBandAvg(5)/120));
   rotatingPoints2.setSpeedOfRotation(0.001);
+  rotatingPoints4Duplicate.setSpeedOfRotation(0.001 + (multiBand.getBandAvg(6)/110));
+  rotatingPoints4Duplicate.setSpeedOfRotation(0.001 + (multiBand.getBandAvg(7)/100));
 
   // extra points
   randPoints.draw(multiBand.getBandAvg(6)/50);

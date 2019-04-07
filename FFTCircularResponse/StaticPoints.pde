@@ -1,5 +1,5 @@
 
-class StaticPoints implements IDrawable {
+class StaticPoints extends Shape implements IDrawable {
 /*
  Draw static points
 */

@@ -1,35 +1,3 @@
-class Expansion
-{
-  
-}
-
-enum ExpansionType
-{
-    
-}
-
-abstract class AbstractCircularPoints extends Shape
-{
-    float radius;
-  
-    AbstractCircularPoints(float radius)
-    {
-       super();
-       this.radius = radius;
-    }
-    
-    void setRadius(float radius)
-    {
-      this.radius = radius;
-    }
-    
-    float getRadius()
-    {
-      return this.radius;
-    }
-  
-}
-
 class RotatingPoints extends AbstractCircularPoints implements IDrawable, IExpandable
 /*
 Creates a circle of rotating ellipses of defined radius and number of points
@@ -47,6 +15,7 @@ Creates a circle of rotating ellipses of defined radius and number of points
   int radiusModulationCounter = 0;
   boolean addFlag = true;
   int expandOffset = 50;
+  int alpha = 255;
 
   public RotatingPoints()
   {
@@ -97,26 +66,46 @@ Creates a circle of rotating ellipses of defined radius and number of points
     return this.drawLine;
   }
 
+  void setAlpha(int alpha)
+  {
+    this.alpha = alpha;
+  }
+
+  int getAlpha()
+  {
+    return this.alpha;
+  }
+
   void expand(float expandValue)
   {
     this.expandValue = expandValue;
   }
-  
+
   void setExpandOffset(int offset)
   {
-     this.expandOffset = offset; 
+    this.expandOffset = offset;
+  }
+
+  void setStrokeWeight(int strokeWeight)
+  {
+    this.STROKE_WEIGHT = strokeWeight;
+  }
+
+  void resetIncrement()
+  {
+    if (inc == 360)
+    {
+      inc = 0;
+    }
   }
 
   void draw()
   {
     float angle = TWO_PI/(float)this.numPoints;
     int numColors = new Shades().getPaletteSize();
-    float colorDivider = this.numPoints / numColors;
+    float colorDivider = this.numPoints / (float) numColors;
 
-    if (inc == 360)
-    {
-      inc = 0;
-    }
+    resetIncrement();
 
     for (int i = 0; i<this.numPoints; i++)
     {
@@ -124,13 +113,12 @@ Creates a circle of rotating ellipses of defined radius and number of points
       float p1y = this.radius*cos((angle*i)+inc) + height/2;
 
       // divide the coloring into sectors. Number of sectors = number of colors in the shades palette
-      int colSelect = int(i / colorDivider);
+      int colSelect = int(i/colorDivider);
 
       strokeWeight(STROKE_WEIGHT);
-      stroke(new Shades().get(colSelect+1));
+      stroke(new Shades().get(colSelect+1), alpha);
       point(p1x, p1y, random(-this.expandValue, this.expandOffset + this.expandValue));
       drawLineBetweenPoints(p1x, p1y);
-      
     }
 
     inc+=(this.speedOfRotation*this.direction);

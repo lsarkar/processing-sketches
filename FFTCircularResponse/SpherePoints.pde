@@ -1,10 +1,10 @@
 // code reference: https://forum.processing.org/one/topic/sphere-of-points.html
-class sphere {
+class Sphere {
 
   int size;
   float increment;
   float x1, z1, y1;
-  sphere(int qual, int se) {
+  Sphere(int qual, int se) {
     size = se;
     increment = TWO_PI/qual;
   }

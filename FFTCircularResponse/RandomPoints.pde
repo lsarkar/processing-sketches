@@ -7,7 +7,6 @@ class RandomPoints implements IDrawable {
   {
   }
 
-  
   void  draw(float addWeight)
   {
     for (int i=0; i<=200+(addWeight*50); i++)

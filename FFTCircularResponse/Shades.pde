@@ -19,9 +19,6 @@ public class Shades
     this.p3 = color(255, 213, 79);
     this.p4 = color(255, 241, 118);
     this.p5 = color(220, 231, 117);
-    
-    // purple
-    //this.p5 = color(186, 104, 200);
   }
 
   public int get(int idx)
@@ -46,11 +43,10 @@ public class Shades
       break;
 
     default:
-    // white default
-    shadeColor = color(255);
-
+      // white default
+      shadeColor = color(255);
     }
-    
+
     return shadeColor;
   }
 
