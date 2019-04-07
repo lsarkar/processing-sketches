@@ -88,10 +88,6 @@ class MultibandAnalyzer
     final int secondBand = 1 + bCalc.getSecondBandNum();
     final int thirdBand = 2 + bCalc.getThirdBandNum();
 
-    //println("first band", firstBand);
-    //println("second band", secondBand);
-    //println("third band", thirdBand);
-
     return (this.fftLog.getAvg(firstBand) + this.fftLog.getAvg(secondBand) + this.fftLog.getAvg(thirdBand)) / bCalc.getTotalBands();
   }
 }

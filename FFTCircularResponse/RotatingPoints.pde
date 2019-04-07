@@ -16,11 +16,13 @@ Creates a circle of rotating ellipses of defined radius and number of points
   boolean addFlag = true;
   int expandOffset = 50;
   int alpha = 255;
+  int strokeWeight;
 
   public RotatingPoints()
   {
     super(350);
     this.numPoints = 20;
+    this.strokeWeight = STROKE_WEIGHT;
   }
 
   RotatingPoints(float radius, int numPoints)

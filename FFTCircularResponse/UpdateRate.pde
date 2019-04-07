@@ -1,7 +1,7 @@
 class UpdateRate {
   
   UpdateRate()  {
-    println(frameRate);
+
   }
   
   boolean isUpdateable(int frameInterval)

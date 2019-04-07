@@ -11,7 +11,7 @@ AudioLibWrapper audioLibWrapper;
 
 MultibandAnalyzer multiBand;
 
-RotatingPoints rotatingPoints1;
+RotatingPoints spinModulator;
 RotatingPoints rotatingPoints2;
 RotatingPoints outerRing;
 RotatingPoints rotatingPoints4;
@@ -35,7 +35,7 @@ void setup()
 {
   // audio track must exist inside the 'data' folder, otherwise Minim cannot load the file
   // assumes test.mp3 is in 'data' folder
-  String songTitle = "bensound-moose.mp3";
+  String songTitle = "bensound-dubstep.mp3";
 
   size(displayWidth, displayHeight, P3D);
   rectMode(CORNERS);
@@ -49,13 +49,13 @@ void setup()
   multiBand = audioLibWrapper.getAnalyzer();
 
   /* CUSTOM CLASS SETUP */
-  rotatingPoints1 = new RotatingPoints(350, 3);
+  spinModulator = new RotatingPoints(350, 3);
   rotatingPoints2 = new RotatingPoints(60.0, 45);
   outerRing = new RotatingPoints(displayHeight/2.6, 400);
   rotatingPoints2.setClockwise(false);
   outerRing.setClockwise(false);
   rotatingPoints2.setDrawLine(true);
-  rotatingPoints1.setExpandOffset(1);
+  spinModulator.setExpandOffset(1);
   rotatingPoints4 = new RotatingPoints(circleMiddle, 200);
   rotatingPoints4.setSpeedOfRotation(0.0);
   rotatingPoints4.setExpandOffset(5);
@@ -63,15 +63,14 @@ void setup()
   rotatingPoints4Duplicate.setExpandOffset(8);
   rotatingPoints4Inner = new RotatingPoints(circleMiddle, 150);
   rotatingPoints4Inner.setExpandOffset(7);
-  rotatingPoints4Inner.setClockwise(false);
 
   rotatingPoints4Duplicate.setAlpha(alphaInnerCircles);
   rotatingPoints4Inner.setAlpha(alphaInnerCircles);
   rotatingPoints4.setAlpha(alphaInnerCircles);
-  rotatingPoints1.setAlpha(alphaRotatingBlade);
+  spinModulator.setAlpha(alphaRotatingBlade);
   rotatingPoints2.setAlpha(alphaRot2);
 
-  rotatingPoints1.setStrokeWeight(15);
+  spinModulator.setStrokeWeight(15);
 
   colorShade = new Shades();
 }
@@ -80,10 +79,19 @@ void drawCenterBox()
 {
   int boxSize = 20;
   translate(width/2, height/2);
+  strokeWeight(2);
   stroke(colorShade.getPrimary());
   fill(colorShade.getFourth());
   box(boxSize);
   translate(-width/2, -height/2);
+}
+
+void drawBorder()
+{
+  strokeWeight(45);
+  stroke(255);
+  fill(255, 40);
+  rect(2, 2, displayWidth-2, displayHeight-2);
 }
 
 void draw()
@@ -96,7 +104,7 @@ void draw()
   drawCenterBox();
 
   // draw all
-  rotatingPoints1.draw();
+  spinModulator.draw();
   rotatingPoints2.draw();
   outerRing.draw();
 
@@ -127,11 +135,17 @@ void draw()
   rotatingPoints4Inner.addRadiusModulation(modu.getSize());
   outerRing.addRadiusModulation(modu.getSize());
 
-  rotatingPoints1.setSpeedOfRotation(0.001 + (multiBand.getBandAvg(5)/120));
+  spinModulator.setSpeedOfRotation(0.001 + (multiBand.getBandAvg(5)/120));
+  spinModulator.setStrokeWeight(15+ int(multiBand.getBandAvg(8)));
   rotatingPoints2.setSpeedOfRotation(0.001);
   rotatingPoints4Duplicate.setSpeedOfRotation(0.001 + (multiBand.getBandAvg(6)/110));
-  rotatingPoints4Duplicate.setSpeedOfRotation(0.001 + (multiBand.getBandAvg(7)/100));
+  rotatingPoints4Inner.setSpeedOfRotation(0.001 + (multiBand.getBandAvg(6)/110));
+  rotatingPoints4.setSpeedOfRotation(0.001 + (multiBand.getBandAvg(6)/110));
+
+  outerRing.setStrokeWeight(5+int(multiBand.getBandAvg(8)));
 
   // extra points
-  randPoints.draw(multiBand.getBandAvg(6)/50);
+  randPoints.draw(multiBand.getBandAvg(6)/8);
+
+  drawBorder();
 }
