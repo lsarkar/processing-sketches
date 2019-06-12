@@ -58,7 +58,7 @@ void setup()
   frameRate(FRAME_RATE);
   
   // add expanding circles
-  int circleSpacing = 50;
+  int circleSpacing = 80;
   int baseRadius = 200;
   
   for (int i = 0; i<NUM_EXPANDING_CIRCLES; i++)
@@ -68,7 +68,10 @@ void setup()
       lin.setIsClockwise(randomBool());
       
       ExpandingCircle expandCircle = new ExpandingCircle(baseRadius+ (i*circleSpacing), 360 / (i+1));
-      expandCircle.setRotationStrategy(lin);
+      //expandCircle.setRotationStrategy(lin);
+      expandCircle.setRotationStrategy(new NoRotation());
+      expandCircle.setStrokeWeight(20);
+      expandCircle.setFadeStrategy(new SlowFadeStrategy());
       circles.add(expandCircle);
   }
   
@@ -76,11 +79,8 @@ void setup()
   audioLibWrapper = new AudioLibWrapper(songTitle, this);
   multiBand = audioLibWrapper.getAnalyzer();
 
-
-
   colorShade = new Shades();
-  
-  
+    
 }
 
 void draw()
@@ -89,31 +89,16 @@ void draw()
   smooth();
   
   audioLibWrapper.forward();
-  
-  int i = NUM_EXPANDING_CIRCLES;
-  
-  
+    
   for(int j = 0; j < circles.size(); j++)
   {  
-      
-      
-      //float updater = 0.0;
-      if (j == 1)
-     {
-        //updater = gFader.updater(multiBand.getBandAvg(i)*i); 
-        //c.draw();
-        //c.updateCircleSize(updater);
-     }
-     
      circles.get(j).updateCircleSize(multiBand.getBandAvg(j)*(j*1.5));
      
      // return the color from the color wheel (8 colors in visual, 16 in wheel)
-     color currentColor = colorShade.getFromList(j*2);
+     color selectedColor = colorShade.getFromList(j*2);
      
-     circles.get(j).setColor(currentColor);
+     circles.get(j).setColor(selectedColor);
      circles.get(j).draw();
-     
-    
   }
   
 }

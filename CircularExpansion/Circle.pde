@@ -58,6 +58,7 @@ public class Circle extends AbstractCircle implements IDrawable
   Shades shades;
   
   IColorStrategy colorStrategy;
+  IFadeStrategy fadeStrategy;
 
   public Circle(float size)
   {
@@ -69,6 +70,7 @@ public class Circle extends AbstractCircle implements IDrawable
     this.acceleration = new PVector(accelerationDefault, 0);
     this.colorScheme = 1;
     this.colorStrategy = new LightColorStrategy();
+    this.fadeStrategy = new SlowFadeStrategy();
   }
 
   public void setColorScheme(int val)
@@ -96,6 +98,10 @@ public class Circle extends AbstractCircle implements IDrawable
   {
     return this.acceleration.x;
   }
+  
+  void setFadeStrategy(IFadeStrategy fadeStrategy) {
+    this.fadeStrategy = fadeStrategy;
+  }
 
   public void update(float fftCurrent)
   {
@@ -108,7 +114,7 @@ public class Circle extends AbstractCircle implements IDrawable
       velocity.x = 0.00;
     }
 
-    this.size-=(velocity.x);
+    this.size-=(velocity.x);    
   }
 
   public void draw()

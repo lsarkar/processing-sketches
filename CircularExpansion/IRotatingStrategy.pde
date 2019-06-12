@@ -3,6 +3,13 @@ interface IRotatingStrategy {
   float getRotation(float initial);
 }
 
+class NoRotation implements IRotatingStrategy {
+  
+   float getRotation(float initial) {
+      return initial; 
+   }
+}
+
 
 class BeatCalculator {
   
