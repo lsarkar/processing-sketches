@@ -1,8 +1,8 @@
-package processing.app;
+package processing.audio;
 
 import ddf.minim.analysis.FFT;
 
-class OctaveCalculator
+public class OctaveCalculator
 {
   int NUM_BANDS_IN_OCTAVE = 3;
   int firstBand;

@@ -26,8 +26,6 @@ class ExpandingCircle extends AbstractDraw implements IDrawable, MaxValueListene
 
   private List<MaxValueListener> listeners = new ArrayList<MaxValueListener>();
 
-  private int maxValueCount = 0;
-
   ExpandingCircle(PApplet p, float size)
   {
 	super(p);
@@ -69,9 +67,8 @@ class ExpandingCircle extends AbstractDraw implements IDrawable, MaxValueListene
 
   @Override
     public void onMaxValueReached() {
-    maxValueCount++;
     p.noFill();
-    p.stroke(255, 100);
+    p.stroke(255, 14);
     p.strokeWeight(2);
     p.ellipse(width/2, height/2, size+5, size+5);
   }

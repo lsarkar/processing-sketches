@@ -1,8 +1,8 @@
-package processing.app;
+package processing.audio;
 
 import ddf.minim.analysis.FFT;
 
-class SingleBand
+public class SingleBand
 {
   /*
    Helper class to get band frequency information

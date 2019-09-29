@@ -1,4 +1,4 @@
-package processing.app;
+package processing.audio;
 // Reference: http://code.compartmental.net/tools/minim/
 import ddf.minim.analysis.*;
 import processing.core.PApplet;

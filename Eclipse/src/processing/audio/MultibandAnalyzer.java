@@ -1,4 +1,4 @@
-package processing.app;
+package processing.audio;
 /*
 BAND LOOKUP TABLE
  
@@ -57,7 +57,7 @@ import ddf.minim.analysis.FFT;
 
 // TODO: MultibandAnalyzer can inherit from FFT
 
-class MultibandAnalyzer
+public class MultibandAnalyzer
 {
   FFT fftLog;
   int NUMBER_OF_BANDS = 10; 

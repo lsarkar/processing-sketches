@@ -2,11 +2,13 @@ package processing.app;
 
 import java.util.ArrayList;
 
+import processing.audio.AudioLibWrapper;
+import processing.audio.MultibandAnalyzer;
 import processing.core.PApplet;
 
-public class UsingProcessing extends PApplet {
+public class AudioSketch extends PApplet {
 
-	public static final String appName = "processing.app.UsingProcessing";
+	public static final String appName = "processing.app.AudioSketch";
 
 	int FRAME_RATE = 30;
 	int NUM_EXPANDING_CIRCLES = 8;
@@ -19,13 +21,10 @@ public class UsingProcessing extends PApplet {
 	UpdateRate updateRate = new UpdateRate();
 	Shades colorShade;
 
-	GlobalFader gFader = new GlobalFader();
-
 	ArrayList<ExpandingCircle> circles = new ArrayList<ExpandingCircle>();
 
 	public static void main(String[] args) {
 		PApplet.main(appName);
-		
 	}
 
 	public void settings() {
