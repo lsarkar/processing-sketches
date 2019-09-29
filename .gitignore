@@ -2,3 +2,5 @@
 *.aif
 *.mp3
 *.wav
+/bin/
+
