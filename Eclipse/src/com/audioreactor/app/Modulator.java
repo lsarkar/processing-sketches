@@ -1,82 +1,42 @@
 package com.audioreactor.app;
-class BaseModulator
-{
-  float modMin;
-  float modMax;
-  float modIncrRate;
 
-  BaseModulator()
-  {
-    this.modIncrRate = 1;
-  }
+public class Modulator extends BaseModulator {
 
-  float getModMin()
-  {
-    return modMin;
-  }
+	boolean modAddition;
+	float modCounter;
+	int FRAME_RATE = 30;
 
-  float getModMax()
-  {
-    return modMax;
-  }
+	public Modulator() {
+		this.modAddition = true;
 
-  void setModMin(float modMin)
-  {
-    this.modMin = modMin;
-  }
+		this.modMax = 1.0f;
+		this.modMin = -1.0f;
+		this.modCounter = 0;
+		this.modIncrRate = 0.3f;
+	}
 
-  void setModMax(float modMax)
-  {
-    this.modMax = modMax;
-  }
-}
+	void calculateFr() {
+		// frames per second
+		int fRate = FRAME_RATE;
+	}
 
-class Modulator extends BaseModulator
-{
+	void run() {
+		if (modCounter >= modMax) {
+			modAddition = false;
+		}
 
-  boolean modAddition;
-  float modCounter;
-  int FRAME_RATE = 30;
+		if (modCounter <= modMin) {
+			modAddition = true;
+		}
 
-  Modulator()
-  {
-    this.modAddition = true;
+		if (modAddition) {
+			modCounter += modIncrRate;
+		} else if (!modAddition) {
+			modCounter -= modIncrRate;
+		}
+	}
 
-    this.modMax = 1.0f;
-    this.modMin = -1.0f;
-    this.modCounter = 0;
-    this.modIncrRate = 0.3f;
-  }
-
-  void calculateFr()
-  {
-    // frames per second
-    int fRate = FRAME_RATE;
-  }
-
-  void run()
-  {
-    if (modCounter >= modMax)
-    {
-      modAddition = false;
-    }
-
-    if (modCounter <= modMin)
-    {
-      modAddition = true;
-    }
-
-    if (modAddition)
-    {
-      modCounter+=modIncrRate;
-    } else if (!modAddition)
-    {
-      modCounter-=modIncrRate;
-    }
-  }
-
-  float getSize()
-  {
-    return this.modCounter;
-  }
+	float getSize() {
+		return this.modCounter;
+	}
 }

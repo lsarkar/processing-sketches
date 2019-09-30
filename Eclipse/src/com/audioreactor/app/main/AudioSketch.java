@@ -1,18 +1,25 @@
-package com.audioreactor.app;
+package com.audioreactor.app.main;
 
 import java.util.ArrayList;
 
+import com.audioreactor.app.ExpandingCircle;
+import com.audioreactor.app.IFadeStrategy;
+import com.audioreactor.app.Modulator;
+import com.audioreactor.app.Shades;
+import com.audioreactor.app.SlowFadeStrategy;
 import com.audioreactor.audio.AudioLibWrapper;
 import com.audioreactor.audio.MultibandAnalyzer;
+import com.audioreactor.rotate.LinearRotationStrategy;
+import com.audioreactor.rotate.NoRotation;
 
 import processing.core.PApplet;
 
 public class AudioSketch extends PApplet {
 
-	public static final String appName = "com.audioreactor.app.AudioSketch";
+	public static final String APP_NAME = "com.audioreactor.app.AudioSketch";
 
-	int FRAME_RATE = 30;
-	int NUM_EXPANDING_CIRCLES = 8;
+	public static final int FRAME_RATE = 30;
+	public static final int NUM_EXPANDING_CIRCLES = 8;
 	AudioLibWrapper audioLibWrapper;
 
 	MultibandAnalyzer multiBand;
@@ -24,7 +31,7 @@ public class AudioSketch extends PApplet {
 	ArrayList<ExpandingCircle> circles = new ArrayList<ExpandingCircle>();
 
 	public static void main(String[] args) {
-		PApplet.main(appName);
+		PApplet.main(APP_NAME);
 	}
 
 	public void settings() {
