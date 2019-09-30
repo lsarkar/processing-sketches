@@ -1,14 +1,15 @@
-package processing.app;
+package com.audioreactor.app;
 
 import java.util.ArrayList;
 
-import processing.audio.AudioLibWrapper;
-import processing.audio.MultibandAnalyzer;
+import com.audioreactor.audio.AudioLibWrapper;
+import com.audioreactor.audio.MultibandAnalyzer;
+
 import processing.core.PApplet;
 
 public class AudioSketch extends PApplet {
 
-	public static final String appName = "processing.app.AudioSketch";
+	public static final String appName = "com.audioreactor.app.AudioSketch";
 
 	int FRAME_RATE = 30;
 	int NUM_EXPANDING_CIRCLES = 8;
@@ -18,7 +19,6 @@ public class AudioSketch extends PApplet {
 
 	Modulator modu = new Modulator();
 
-	UpdateRate updateRate = new UpdateRate();
 	Shades colorShade;
 
 	ArrayList<ExpandingCircle> circles = new ArrayList<ExpandingCircle>();
@@ -35,9 +35,8 @@ public class AudioSketch extends PApplet {
 		// audio track must exist inside the 'data' folder, otherwise Minim cannot load
 		// the file
 		// assumes test.mp3 is in 'data' folder
-		String songTitle = "bensound-dubstep.mp3";
+		String songTitle = "bensound-endlessmotion.mp3";
 
-		
 		rectMode(CORNERS);
 		noCursor();
 
@@ -53,7 +52,8 @@ public class AudioSketch extends PApplet {
 			lin.setSpeed(0.5f);
 			lin.setIsClockwise(true);
 
-			ExpandingCircle expandCircle = new ExpandingCircle(this, baseRadius + (i * circleSpacing), 360.0f / (i + 1f));
+			ExpandingCircle expandCircle = new ExpandingCircle(this, baseRadius + (i * circleSpacing),
+					360.0f / (i + 1f));
 			// expandCircle.setRotationStrategy(lin);
 			expandCircle.setRotationStrategy(new NoRotation());
 			expandCircle.setStrokeWeight(20);

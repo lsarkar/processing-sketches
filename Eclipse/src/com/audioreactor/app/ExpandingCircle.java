@@ -1,9 +1,10 @@
-package processing.app;
+package com.audioreactor.app;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import processing.app.ui.AbstractDraw;
+import com.audioreactor.app.ui.AbstractDraw;
+
 import processing.core.PApplet;
 
 /*

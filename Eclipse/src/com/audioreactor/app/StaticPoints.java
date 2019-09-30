@@ -1,6 +1,7 @@
-package processing.app;
+package com.audioreactor.app;
 
-import processing.app.ui.AbstractDraw;
+import com.audioreactor.app.ui.AbstractDraw;
+
 import processing.core.PApplet;
 
 class StaticPoints extends AbstractDraw implements IDrawable {

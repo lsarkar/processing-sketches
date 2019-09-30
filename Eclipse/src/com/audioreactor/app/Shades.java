@@ -1,4 +1,4 @@
-package processing.app;
+package com.audioreactor.app;
 import java.util.*;
 
 import processing.core.PApplet;

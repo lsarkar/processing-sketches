@@ -1,4 +1,4 @@
-package processing.audio;
+package com.audioreactor.audio;
 /*
 BAND LOOKUP TABLE
  

@@ -1,4 +1,4 @@
-package processing.app.ui;
+package com.audioreactor.app.ui;
 
 import processing.core.PApplet;
 

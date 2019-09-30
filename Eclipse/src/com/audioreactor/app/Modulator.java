@@ -1,4 +1,4 @@
-package processing.app;
+package com.audioreactor.app;
 class BaseModulator
 {
   float modMin;

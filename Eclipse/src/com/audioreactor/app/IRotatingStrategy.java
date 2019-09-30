@@ -1,4 +1,4 @@
-package processing.app;
+package com.audioreactor.app;
 interface IRotatingStrategy {
 
   float getRotation(float initial);
