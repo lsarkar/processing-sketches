@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.audioreactor.app.ui.AbstractDraw;
+import com.audioreactor.fade.IFadeStrategy;
+import com.audioreactor.fade.SlowFadeStrategy;
 import com.audioreactor.rotate.IRotatingStrategy;
 import com.audioreactor.rotate.LinearRotationStrategy;
 

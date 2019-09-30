@@ -1,6 +1,6 @@
-package com.audioreactor.app;
+package com.audioreactor.modulate;
 
-public class BaseModulator {
+class BaseModulator {
 	float modMin;
 	float modMax;
 	float modIncrRate;

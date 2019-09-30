@@ -1,4 +1,4 @@
-package com.audioreactor.app;
+package com.audioreactor.fade;
 
 class LinearFadeStrategy extends AbstractFade {
 

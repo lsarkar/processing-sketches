@@ -1,4 +1,4 @@
-package com.audioreactor.app;
+package com.audioreactor.fade;
 class CustomLinearStrategy extends LinearFadeStrategy {
 
 	CustomLinearStrategy(float alpha) {

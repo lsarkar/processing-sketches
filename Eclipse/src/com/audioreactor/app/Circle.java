@@ -1,6 +1,8 @@
 package com.audioreactor.app;
 
 import com.audioreactor.app.ui.AbstractDraw;
+import com.audioreactor.fade.IFadeStrategy;
+import com.audioreactor.fade.SlowFadeStrategy;
 
 import processing.core.PApplet;
 import processing.core.PVector;

@@ -1,10 +1,10 @@
-package com.audioreactor.app;
+package com.audioreactor.modulate;
 
 public class Modulator extends BaseModulator {
 
 	boolean modAddition;
 	float modCounter;
-	int FRAME_RATE = 30;
+	public static final int FRAME_RATE = 30;
 
 	public Modulator() {
 		this.modAddition = true;
@@ -13,11 +13,6 @@ public class Modulator extends BaseModulator {
 		this.modMin = -1.0f;
 		this.modCounter = 0;
 		this.modIncrRate = 0.3f;
-	}
-
-	void calculateFr() {
-		// frames per second
-		int fRate = FRAME_RATE;
 	}
 
 	void run() {

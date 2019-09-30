@@ -1,7 +1,9 @@
-package com.audioreactor.app;
+package com.audioreactor.fade;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.audioreactor.app.MaxValueListener;
 
 public interface IFadeStrategy {
 
@@ -16,7 +18,7 @@ abstract class AbstractFade implements IFadeStrategy {
 
 	// listener pattern:
 	// https://dzone.com/articles/the-observer-pattern-using-modern-java
-	List<MaxValueListener> listeners = new ArrayList();
+	List<MaxValueListener> listeners = new ArrayList<MaxValueListener>();
 
 	public AbstractFade() {
 	}

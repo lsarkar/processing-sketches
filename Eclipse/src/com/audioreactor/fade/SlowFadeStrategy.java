@@ -1,4 +1,4 @@
-package com.audioreactor.app;
+package com.audioreactor.fade;
 
 public class SlowFadeStrategy extends LinearFadeStrategy {
 

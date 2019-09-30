@@ -3,20 +3,20 @@ package com.audioreactor.app.main;
 import java.util.ArrayList;
 
 import com.audioreactor.app.ExpandingCircle;
-import com.audioreactor.app.IFadeStrategy;
-import com.audioreactor.app.Modulator;
 import com.audioreactor.app.Shades;
-import com.audioreactor.app.SlowFadeStrategy;
 import com.audioreactor.audio.AudioLibWrapper;
 import com.audioreactor.audio.MultibandAnalyzer;
+import com.audioreactor.fade.IFadeStrategy;
+import com.audioreactor.fade.SlowFadeStrategy;
+import com.audioreactor.modulate.Modulator;
 import com.audioreactor.rotate.LinearRotationStrategy;
-import com.audioreactor.rotate.NoRotation;
+import com.audioreactor.rotate.NoRotationStrategy;
 
 import processing.core.PApplet;
 
 public class AudioSketch extends PApplet {
 
-	public static final String APP_NAME = "com.audioreactor.app.AudioSketch";
+	public static final String APP_NAME = "com.audioreactor.app.main.AudioSketch";
 
 	public static final int FRAME_RATE = 30;
 	public static final int NUM_EXPANDING_CIRCLES = 8;
@@ -28,7 +28,7 @@ public class AudioSketch extends PApplet {
 
 	Shades colorShade;
 
-	ArrayList<ExpandingCircle> circles = new ArrayList<ExpandingCircle>();
+	ArrayList<ExpandingCircle> circles = new ArrayList<>();
 
 	public static void main(String[] args) {
 		PApplet.main(APP_NAME);
@@ -62,7 +62,7 @@ public class AudioSketch extends PApplet {
 			ExpandingCircle expandCircle = new ExpandingCircle(this, baseRadius + (i * circleSpacing),
 					360.0f / (i + 1f));
 			// expandCircle.setRotationStrategy(lin);
-			expandCircle.setRotationStrategy(new NoRotation());
+			expandCircle.setRotationStrategy(new NoRotationStrategy());
 			expandCircle.setStrokeWeight(20);
 			// IFadeStrategy fade = new CustomLinearStrategy(NUM_EXPANDING_CIRCLES-i);
 			IFadeStrategy fade = new SlowFadeStrategy();
