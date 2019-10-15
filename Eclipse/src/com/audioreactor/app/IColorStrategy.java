@@ -29,14 +29,12 @@ class LightColorStrategy extends AbstractDraw implements IColorStrategy {
 
 }
 
-class DarkColorStrategy implements IColorStrategy {
+class DarkColorStrategy extends AbstractDraw implements IColorStrategy {
 
 	Shades shades;
 
-	PApplet p;
-
 	DarkColorStrategy(PApplet p) {
-		this.p = p;
+		super(p);
 		this.shades = new Shades(p);
 	}
 

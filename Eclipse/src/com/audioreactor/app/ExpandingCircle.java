@@ -1,9 +1,7 @@
 package com.audioreactor.app;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.audioreactor.app.ui.AbstractDraw;
+import com.audioreactor.app.ui.IDrawable;
 import com.audioreactor.fade.IFadeStrategy;
 import com.audioreactor.fade.SlowFadeStrategy;
 import com.audioreactor.rotate.IRotatingStrategy;
@@ -29,8 +27,6 @@ public class ExpandingCircle extends AbstractDraw implements IDrawable, MaxValue
 	IRotatingStrategy rotation;
 	IFadeStrategy fadeStrategy;
 
-	private List<MaxValueListener> listeners = new ArrayList<MaxValueListener>();
-
 	public ExpandingCircle(PApplet p, float size) {
 		super(p);
 		col = p.color(255, 0, 0);
@@ -54,7 +50,6 @@ public class ExpandingCircle extends AbstractDraw implements IDrawable, MaxValue
 	}
 
 	public void updateCircleSize(float size) {
-		// this.circleSize = size;
 		this.circleSize = fadeStrategy.fade(size);
 	}
 
@@ -93,7 +88,6 @@ public class ExpandingCircle extends AbstractDraw implements IDrawable, MaxValue
 		p.strokeWeight(strokeWeight);
 		p.strokeCap(p.SQUARE);
 		p.ellipseMode(p.CENTER);
-		p.smooth();
 
 		// Form: arc(x, y, width, height, start, stop)
 		p.stroke(col);

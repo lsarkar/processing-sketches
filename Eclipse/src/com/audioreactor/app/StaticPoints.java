@@ -1,6 +1,7 @@
 package com.audioreactor.app;
 
 import com.audioreactor.app.ui.AbstractDraw;
+import com.audioreactor.app.ui.IDrawable;
 
 import processing.core.PApplet;
 

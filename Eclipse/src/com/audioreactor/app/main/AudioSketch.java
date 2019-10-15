@@ -9,7 +9,6 @@ import com.audioreactor.audio.MultibandAnalyzer;
 import com.audioreactor.fade.IFadeStrategy;
 import com.audioreactor.fade.SlowFadeStrategy;
 import com.audioreactor.modulate.Modulator;
-import com.audioreactor.rotate.LinearRotationStrategy;
 import com.audioreactor.rotate.NoRotationStrategy;
 
 import processing.core.PApplet;
@@ -36,9 +35,11 @@ public class AudioSketch extends PApplet {
 
 	public void settings() {
 		size(displayWidth, displayHeight, P3D);
+		smooth(8);
 	}
 
 	public void setup() {
+
 		// audio track must exist inside the 'data' folder, otherwise Minim cannot load
 		// the file
 		// assumes test.mp3 is in 'data' folder
@@ -53,18 +54,14 @@ public class AudioSketch extends PApplet {
 		// add expanding circles
 		int circleSpacing = 80;
 		int baseRadius = 200;
+		int strokeWeight = 25;
 
 		for (int i = 0; i < NUM_EXPANDING_CIRCLES; i++) {
-			LinearRotationStrategy lin = new LinearRotationStrategy();
-			lin.setSpeed(0.5f);
-			lin.setIsClockwise(true);
 
 			ExpandingCircle expandCircle = new ExpandingCircle(this, baseRadius + (i * circleSpacing),
 					360.0f / (i + 1f));
-			// expandCircle.setRotationStrategy(lin);
 			expandCircle.setRotationStrategy(new NoRotationStrategy());
-			expandCircle.setStrokeWeight(20);
-			// IFadeStrategy fade = new CustomLinearStrategy(NUM_EXPANDING_CIRCLES-i);
+			expandCircle.setStrokeWeight(strokeWeight);
 			IFadeStrategy fade = new SlowFadeStrategy();
 			expandCircle.setFadeStrategy(fade);
 			fade.registerMaxValueListener(expandCircle);
@@ -89,7 +86,7 @@ public class AudioSketch extends PApplet {
 			circles.get(j).updateCircleSize(multiBand.getBandAvg(j) * (j * 1.5f));
 
 			// return the color from the color wheel (8 colors in visual, 16 in wheel)
-			int selectedColor = colorShade.getFromList(j * 2);
+			final int selectedColor = colorShade.getFromList(j * 2);
 
 			circles.get(j).setColor(selectedColor);
 			circles.get(j).draw();

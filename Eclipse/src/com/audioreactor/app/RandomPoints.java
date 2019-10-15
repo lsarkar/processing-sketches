@@ -1,12 +1,11 @@
 package com.audioreactor.app;
 
 import com.audioreactor.app.ui.AbstractDraw;
+import com.audioreactor.app.ui.IDrawable;
 
 import processing.core.PApplet;
 
 class RandomPoints extends AbstractDraw implements IDrawable {
-
-	private PApplet p;
 
 	RandomPoints(PApplet p) {
 		super(p);
