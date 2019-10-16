@@ -61,11 +61,16 @@ public class MultibandAnalyzer {
 	FFT fftLog;
 	public static final int NUMBER_OF_BANDS = 10;
 	public static final int NUM_BANDS_IN_OCTAVE = 3;
+	private OctaveAnalyzer[] octaves = new OctaveAnalyzer[NUMBER_OF_BANDS];
 
 	public MultibandAnalyzer(FFT fftLog) {
 		this.fftLog = fftLog;
 		// expecting fftLog of 30 averages
 		this.fftLog.logAverages(22, NUM_BANDS_IN_OCTAVE);
+
+		for (int i = 0; i < NUMBER_OF_BANDS; i++) {
+			octaves[i] = new OctaveAnalyzer(this.fftLog, i);
+		}
 	}
 
 	public void setFFTLog(FFT fftLog) {
@@ -73,20 +78,16 @@ public class MultibandAnalyzer {
 	}
 
 	public void getAllBandInfo(int i) {
-		OctaveCalculator bCalc = new OctaveCalculator(this.fftLog, i);
-		bCalc.toString();
+		octaves[i].toString();
 	}
 
 	// get band 0 - 10 (0 is <45Hz, not considered useful for analysis of audio
 	// tracks)
 	public float getBandAvg(int i) {
-		OctaveCalculator bCalc = new OctaveCalculator(this.fftLog, i);
+		return octaves[i].getBandsAverage();
+	}
 
-		final int firstBand = bCalc.getFirstBandNum();
-		final int secondBand = 1 + bCalc.getSecondBandNum();
-		final int thirdBand = 2 + bCalc.getThirdBandNum();
-
-		return (this.fftLog.getAvg(firstBand) + this.fftLog.getAvg(secondBand) + this.fftLog.getAvg(thirdBand))
-				/ bCalc.getTotalBands();
+	public OctaveAnalyzer getOctaveCalc(int i) {
+		return octaves[i];
 	}
 }

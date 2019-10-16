@@ -50,7 +50,15 @@ public class ExpandingCircle extends AbstractDraw implements IDrawable, MaxValue
 	}
 
 	public void updateCircleSize(float size) {
-		this.circleSize = fadeStrategy.fade(size);
+
+		float tempSize = size;
+
+		if (size > 340.0f) {
+			tempSize = 340.0f;
+		}
+
+		this.circleSize = tempSize;
+		this.circleSize = fadeStrategy.fade(this.circleSize);
 	}
 
 	public void setStrokeWeight(int strokeWeight) {
@@ -66,7 +74,7 @@ public class ExpandingCircle extends AbstractDraw implements IDrawable, MaxValue
 		p.noFill();
 		p.stroke(255, 14);
 		p.strokeWeight(2);
-		p.ellipse(width / 2, height / 2, size + 5, size + 5);
+		p.ellipse(centerX, centerY, size + 5, size + 5);
 	}
 
 	public void draw() {

@@ -2,7 +2,7 @@ package com.audioreactor.audio;
 
 import ddf.minim.analysis.FFT;
 
-public class OctaveCalculator {
+public class OctaveAnalyzer {
 	private static final int NUM_BANDS_IN_OCTAVE = 3;
 	int firstBand;
 	int secondBand;
@@ -13,10 +13,11 @@ public class OctaveCalculator {
 	float highFreq;
 	float freqWidth;
 	int index;
+	float bandAverageMax = 0.0f;
 
 	FFT fftLog;
 
-	public OctaveCalculator(FFT fftLog, int idx) {
+	public OctaveAnalyzer(FFT fftLog, int idx) {
 		// idx - index of the band (set of 3). Refer to BAND LOOKUP TABLE for frequency
 		// info
 		this.fftLog = fftLog;
@@ -31,12 +32,12 @@ public class OctaveCalculator {
 	}
 
 	public float getLowestFreq() {
-		final SingleBand b = new SingleBand(this.fftLog, this.firstBand);
+		final SingleBandAnalyzer b = new SingleBandAnalyzer(this.fftLog, this.firstBand);
 		return b.getLowFreq();
 	}
 
 	public float getHighestFreq() {
-		final SingleBand b = new SingleBand(this.fftLog, this.thirdBand);
+		final SingleBandAnalyzer b = new SingleBandAnalyzer(this.fftLog, this.thirdBand);
 		return b.getHighFreq();
 	}
 
@@ -58,6 +59,22 @@ public class OctaveCalculator {
 
 	public int getThirdBandNum() {
 		return this.thirdBand;
+	}
+
+	public float getBandsMax() {
+		return this.bandAverageMax;
+	}
+
+	public float getBandsAverage() {
+
+		float result = (this.fftLog.getAvg(firstBand) + this.fftLog.getAvg(secondBand) + this.fftLog.getAvg(thirdBand))
+				/ NUM_BANDS_IN_OCTAVE;
+
+		if (result > this.bandAverageMax) {
+			this.bandAverageMax = result;
+		}
+
+		return result;
 	}
 
 	@Override

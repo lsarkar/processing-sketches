@@ -16,17 +16,21 @@ import processing.core.PApplet;
 public class AudioSketch extends PApplet {
 
 	public static final String APP_NAME = "com.audioreactor.app.main.AudioSketch";
-
 	public static final int FRAME_RATE = 30;
 	public static final int NUM_EXPANDING_CIRCLES = 8;
+	public static final String SONG_TITLE = "bensound-endlessmotion.mp3";
+	// public static final String SONG_TITLE = "440Hz_0dBFS.wav";
+
+	// 165 max 220Hz
+	// 96 max 440Hz
+
+	public final int backgroundColor = color(37, 38, 39);
+
 	AudioLibWrapper audioLibWrapper;
-
 	MultibandAnalyzer multiBand;
-
 	Modulator modu = new Modulator();
 
 	Shades colorShade;
-
 	ArrayList<ExpandingCircle> circles = new ArrayList<>();
 
 	public static void main(String[] args) {
@@ -43,7 +47,6 @@ public class AudioSketch extends PApplet {
 		// audio track must exist inside the 'data' folder, otherwise Minim cannot load
 		// the file
 		// assumes test.mp3 is in 'data' folder
-		String songTitle = "bensound-endlessmotion.mp3";
 
 		rectMode(CORNERS);
 		noCursor();
@@ -70,30 +73,31 @@ public class AudioSketch extends PApplet {
 		}
 
 		// audio configuration
-		audioLibWrapper = new AudioLibWrapper(songTitle, this);
+		audioLibWrapper = new AudioLibWrapper(SONG_TITLE, this);
 		multiBand = audioLibWrapper.getAnalyzer();
 
 		colorShade = new Shades(this);
 	}
 
 	public void draw() {
-		background(37, 38, 39);
+		background(backgroundColor);
 		smooth();
 
 		audioLibWrapper.forward();
 
+		float cScaleFactor = 1.0f; // was 1.5f
+
 		for (int j = 0; j < circles.size(); j++) {
-			circles.get(j).updateCircleSize(multiBand.getBandAvg(j) * (j * 1.5f));
+
+			int invertedIdx = this.NUM_EXPANDING_CIRCLES - j;
 
 			// return the color from the color wheel (8 colors in visual, 16 in wheel)
 			final int selectedColor = colorShade.getFromList(j * 2);
 
 			circles.get(j).setColor(selectedColor);
+			circles.get(j).updateCircleSize(multiBand.getBandAvg(invertedIdx) * (invertedIdx * cScaleFactor));
 			circles.get(j).draw();
 		}
 	}
 
-	boolean randomBool() {
-		return random(1) > 0.5;
-	}
 }
