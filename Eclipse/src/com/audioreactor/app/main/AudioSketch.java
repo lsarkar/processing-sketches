@@ -8,7 +8,6 @@ import com.audioreactor.audio.AudioLibWrapper;
 import com.audioreactor.audio.MultibandAnalyzer;
 import com.audioreactor.fade.IFadeStrategy;
 import com.audioreactor.fade.SlowFadeStrategy;
-import com.audioreactor.modulate.Modulator;
 import com.audioreactor.rotate.NoRotationStrategy;
 
 import processing.core.PApplet;
@@ -18,36 +17,30 @@ public class AudioSketch extends PApplet {
 	public static final String APP_NAME = "com.audioreactor.app.main.AudioSketch";
 	public static final int FRAME_RATE = 30;
 	public static final int NUM_EXPANDING_CIRCLES = 8;
-	public static final String SONG_TITLE = "bensound-endlessmotion.mp3";
-	// public static final String SONG_TITLE = "440Hz_0dBFS.wav";
-
-	// 165 max 220Hz
-	// 96 max 440Hz
-
+	public static final String SONG_TITLE = "bensound-allthat.mp3";
 	public final int backgroundColor = color(37, 38, 39);
 
-	AudioLibWrapper audioLibWrapper;
-	MultibandAnalyzer multiBand;
-	Modulator modu = new Modulator();
+	private AudioLibWrapper audioLibWrapper;
+	private MultibandAnalyzer multiBand;
 
-	Shades colorShade;
-	ArrayList<ExpandingCircle> circles = new ArrayList<>();
+	private Shades colorShade;
+	private ArrayList<ExpandingCircle> circles = new ArrayList<>();
 
 	public static void main(String[] args) {
 		PApplet.main(APP_NAME);
 	}
 
+	@Override
 	public void settings() {
 		size(displayWidth, displayHeight, P3D);
 		smooth(8);
 	}
 
+	@Override
 	public void setup() {
 
 		// audio track must exist inside the 'data' folder, otherwise Minim cannot load
 		// the file
-		// assumes test.mp3 is in 'data' folder
-
 		rectMode(CORNERS);
 		noCursor();
 
@@ -79,17 +72,20 @@ public class AudioSketch extends PApplet {
 		colorShade = new Shades(this);
 	}
 
+	@Override
 	public void draw() {
 		background(backgroundColor);
-		smooth();
 
 		audioLibWrapper.forward();
 
-		float cScaleFactor = 1.0f; // was 1.5f
-
 		for (int j = 0; j < circles.size(); j++) {
 
-			int invertedIdx = this.NUM_EXPANDING_CIRCLES - j;
+			// int invertedIdx = NUM_EXPANDING_CIRCLES - j;
+			int invertedIdx = j;
+
+			// high frequencies typically have smaller average amplitude than the lower
+			// frequencies, so apply scaled weighting on the higher bands
+			float cScaleFactor = (j * 0.3f) + 1.0f;
 
 			// return the color from the color wheel (8 colors in visual, 16 in wheel)
 			final int selectedColor = colorShade.getFromList(j * 2);
@@ -98,6 +94,7 @@ public class AudioSketch extends PApplet {
 			circles.get(j).updateCircleSize(multiBand.getBandAvg(invertedIdx) * (invertedIdx * cScaleFactor));
 			circles.get(j).draw();
 		}
+
 	}
 
 }

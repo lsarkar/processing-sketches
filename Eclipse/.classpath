@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="library/minim.jar"/>
+	<classpathentry kind="lib" path="library/minim.jar" sourcepath="library/minim.jar"/>
 	<classpathentry kind="lib" path="library/jsminim.jar"/>
 	<classpathentry kind="lib" path="core.jar"/>
 	<classpathentry kind="lib" path="gluegen-rt-natives-linux-aarch64.jar"/>
