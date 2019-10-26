@@ -6,9 +6,10 @@ Static sketch that draws rectanges of varying size and transparency based on a s
 
 ## FFT Circular Response
 Audio reactive visual based on fast fourier transform
+![Alt text](FFTCircularResponse/sketch_output.png)
 
 ## MinimalArc
 2D Minimalist audio reactive visual. 8 different colored arcs covering 8 frequency bands
 
 NOTE: Configured to run in Eclipse environment, will not run in Processing IDE
-![Alt text](MinimalArc/sketch_output.PNG)
+![Alt text](MinimalArc/sketch_output.png)
