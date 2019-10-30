@@ -1,3 +1,4 @@
+
 package com.audioreactor.app.main;
 
 import java.util.ArrayList;
@@ -80,7 +81,6 @@ public class AudioSketch extends PApplet {
 
 		for (int j = 0; j < circles.size(); j++) {
 
-			// int invertedIdx = NUM_EXPANDING_CIRCLES - j;
 			int invertedIdx = j;
 
 			// high frequencies typically have smaller average amplitude than the lower
@@ -90,8 +90,9 @@ public class AudioSketch extends PApplet {
 			// return the color from the color wheel (8 colors in visual, 16 in wheel)
 			final int selectedColor = colorShade.getFromList(j * 2);
 
+			// the zero band is <50Hz and not useful for plotting, plot from band 1
 			circles.get(j).setColor(selectedColor);
-			circles.get(j).updateCircleSize(multiBand.getBandAvg(invertedIdx) * (invertedIdx * cScaleFactor));
+			circles.get(j).updateCircleSize(multiBand.getBandAvg(invertedIdx + 1) * ((invertedIdx + 1) * cScaleFactor));
 			circles.get(j).draw();
 		}
 
