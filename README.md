@@ -11,8 +11,6 @@ Audio reactive visual based on fast fourier transform
 
 ![Alt text](FFTCircularResponse/sketch_output.png)
 
-
-
 ## MinimalArc
 2D Minimalist audio reactive visual. 8 different colored arcs covering 8 frequency bands
 
@@ -20,3 +18,9 @@ Audio reactive visual based on fast fourier transform
 
 NOTE: Configured to run in Eclipse environment, will not run in Processing IDE
 ![Alt text](MinimalArc/sketch_output.png)
+
+## EllipSineMotion
+Moving ellipses that follow a sinewave motion from left to right, growing in size when reaching the sine wave peak
+![EllipSineMotion Gif](EllipSineMotion/demo/ellipsinemotion.gif)
+
+
