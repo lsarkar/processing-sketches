@@ -2,10 +2,11 @@
 /* production vs development flag */
 boolean production = false;
 
-ArrayList<SineEllipse> ellipseList = new ArrayList<SineEllipse>();
-
 /* the number of the sine ellipse objects to create */
 int NUM_SHAPES = 80;
+
+SineEllipseSystem s;
+SineEllipseSystem t;
 
 void setup() {
   smooth();
@@ -14,22 +15,44 @@ void setup() {
   if (production) {
     noCursor();
   }
-
-  for (int idx = 0; idx<=NUM_SHAPES; idx++) {
-    // set the Y range of the SineEllipse is set to just slightly less than the height of the sketch
-    final SineEllipse si = new SineEllipse(height/2.25, NUM_SHAPES, idx);
-    si.setYIntersect(height/2);
-    ellipseList.add(si);
-  }
+  
+  s = new SineEllipseSystem(NUM_SHAPES, height/4);
+  t = new SineEllipseSystem(NUM_SHAPES/2, (height/4)*3);
 }
 
 void draw() {
   background(23, 25, 28, 200);
+      
+  s.draw();
+  t.draw();
+}
+
+class SineEllipseSystem {
   
-  // iterate and draw all SineEllipses
-  for (int i = 0; i<ellipseList.size(); i++) {
-    final SineEllipse si = ellipseList.get(i);
+  ArrayList<SineEllipse> sineEllipses;
+  float yStart;
+  int numItems;
+  
+  SineEllipseSystem(int numItems, float yStart) {
+    this.numItems = numItems;
+    this.yStart = yStart;
+    
+   sineEllipses = new ArrayList<SineEllipse>(); 
+   
+   for (int i = 0; i < this.numItems; i++) {
+     final SineEllipse si = new SineEllipse(height/4.8, this.numItems, i);
+      si.setYIntersect(yStart);
+      sineEllipses.add(si);
+   }
+   
+  }
+  
+  void draw() {
+    // iterate and draw all SineEllipses
+    for (int i = 0; i<sineEllipses.size(); i++) {
+    final SineEllipse si = sineEllipses.get(i);
     si.draw();
   }
-
+  }
+  
 }
