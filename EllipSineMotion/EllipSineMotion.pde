@@ -1,58 +1,53 @@
+PFont font;
 
 /* production vs development flag */
 boolean production = false;
 
-/* the number of the sine ellipse objects to create */
-int NUM_SHAPES = 80;
+// use number of shapes as a proportion of width / number of shapes to achieve an integer. This will ensure a continuous sine wave
+// i.e 800 / 160
+int NUM_SHAPES = 160;
+int NUM_SYSTEMS = 2;
 
-SineEllipseSystem s;
-SineEllipseSystem t;
+ArrayList<SineEllipseSystem> sineSystems = new ArrayList<SineEllipseSystem>();
 
 void setup() {
+  frameRate(60);
   smooth();
   size(800, 600);
 
   if (production) {
     noCursor();
+  } else {
+    font = createFont("Arial Bold", 48);
+    textFont(font, 36);
   }
-  
-  s = new SineEllipseSystem(NUM_SHAPES, height/4);
-  t = new SineEllipseSystem(NUM_SHAPES/2, (height/4)*3);
+
+  float yAmplitude = height/NUM_SYSTEMS;
+
+  for (int i = 0; i<NUM_SYSTEMS; i++) {
+    float y = (i+1) * yAmplitude;
+    float baseHeight = yAmplitude/2; // the y mid point based on the number of systems
+    
+    boolean yFlip = false;
+    
+    if (i % 2 == 0) {
+     yFlip = true; 
+    }
+    
+    sineSystems.add(new SineEllipseSystem(yAmplitude, NUM_SHAPES, y-baseHeight, yFlip));
+  }
+
 }
 
 void draw() {
   background(23, 25, 28, 200);
-      
-  s.draw();
-  t.draw();
-}
-
-class SineEllipseSystem {
   
-  ArrayList<SineEllipse> sineEllipses;
-  float yStart;
-  int numItems;
-  
-  SineEllipseSystem(int numItems, float yStart) {
-    this.numItems = numItems;
-    this.yStart = yStart;
-    
-   sineEllipses = new ArrayList<SineEllipse>(); 
-   
-   for (int i = 0; i < this.numItems; i++) {
-     final SineEllipse si = new SineEllipse(height/4.8, this.numItems, i);
-      si.setYIntersect(yStart);
-      sineEllipses.add(si);
-   }
-   
+  for (int i = 0; i<sineSystems.size(); i++) {
+    sineSystems.get(i).draw();
   }
   
-  void draw() {
-    // iterate and draw all SineEllipses
-    for (int i = 0; i<sineEllipses.size(); i++) {
-    final SineEllipse si = sineEllipses.get(i);
-    si.draw();
+  if (!production) {
+    fill(255);
+    text(frameRate, 20, 20);
   }
-  }
-  
 }
