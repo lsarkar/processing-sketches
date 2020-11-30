@@ -16,3 +16,15 @@ class SineParams {
     return yZero;
   }
 }
+
+class Coords {
+  
+ float xStart;
+ float theta;
+  
+ Coords(float xStart, float theta) {
+   this.xStart = xStart;
+   this.theta = theta;
+ }
+  
+}

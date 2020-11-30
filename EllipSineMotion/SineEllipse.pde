@@ -2,10 +2,9 @@
  SineEllipse - Draws an ellipse that travels upon a sine wave path motioning from right to left
  */
 
-
 class SineEllipse {
 
-  private float thetaIncrement = 0.02;
+  private float thetaIncrement = 0.1;
 
   /* x and y positions of shape */
   private float xPos;
@@ -23,49 +22,33 @@ class SineEllipse {
 
   private float shapeEnlargeFactor = 0;
 
-  private float dx = 1.0;
+  private float dx = 4.0; 
 
   /* THRESHOLD for which after effect is applied when above this number. RANGE: 0.0 -> 1.0 */
   private float AFTER_EFFECT_THRESHOLD = 0.001;
 
   private float YZERO = height/2;
-
-  private int numItems;
-  private int index;
   
   private boolean yFlip;
-
-  SineEllipse(SineParams yParams, int numItems, int idx) {
-    this(yParams, numItems, idx, false);
-  }
   
-  SineEllipse(SineParams yParams, int numItems, int idx, boolean yFlip) {
+  SineEllipse(SineParams yParams, Coords coords, boolean yFlip, float thetaInc, float xSpeed) {
     this.yAmplitude = yParams.getAmplitude();
     this.YZERO = yParams.getYZero();
-    this.numItems = numItems;
-    this.index = idx;
     this.yFlip = yFlip;
-    this.xPos = index * getXStepSize();
-    this.theta = getAngleInRad();
+    this.thetaIncrement = thetaInc;
+    this.dx = xSpeed;
+    this.xPos = coords.xStart;
+    this.theta = coords.theta;
     this.yPos = setYPos();
-    
   }
   
-  // TODO: consider delegating x and ystart positions outside of the class
-  SineEllipse(int numItems, int idx) {
-    this(new SineParams(50, width/2), numItems, idx);
+  float getXIncrement() {
+   return dx; 
   }
+  
 
   private float setYPos() {
     return sin(theta) * yAmplitude;
-  }
-
-  private float getXStepSize() {
-    return width / numItems;
-  }
-
-  private float getAngleInRad() {
-    return radians((index / getXStepSize()) * 360.0); // NOTE: aiming to replace index without count
   }
 
   void draw() {
@@ -132,7 +115,7 @@ class SineEllipse {
    */
   private void afterTouch(float colorMappedVal, float sineVal) {
     final float alphaFactor = abs(sineVal) * 100;
-    final int baseAlpha = 80;
+    final int baseAlpha = 120;
 
     fill(getActiveColor(colorMappedVal), baseAlpha + alphaFactor);
     noStroke();
@@ -143,7 +126,7 @@ class SineEllipse {
 
   private float getAfterTouchShapeSize() {
     float enlargeFactor = abs(yPos/shapeScale);
-    int sizeOffsetAgainstMainEllipse = -5; // negative padding so that the aftertouch is smaller than the sineellipse draw
+    int sizeOffsetAgainstMainEllipse = -2; // negative padding so that the aftertouch is smaller than the sineellipse draw
 
     return size + enlargeFactor + sizeOffsetAgainstMainEllipse;
   }
